@@ -7,9 +7,9 @@ class Users::OmniauthCallbacksController < ApplicationController
     if current_user
       # The user is logged in
       # Check if a user exists with that uid
-      if User.where(linkedin_uid: omniauth['uid']).exists?
+      if User.where('linkedin_uid = ?', omniauth['uid']).exists?
         # If the user is the same, login, otherwise, warn that there is another user with that uid
-        if User.where(linkedin_uid: omniauth['uid']).first.id == current_user.id
+        if User.where('linkedin_uid = ?', omniauth['uid']).first.id == current_user.id
           # Update the credentials
           current_user.linkedin_uid = omniauth['uid']
           current_user.linkedin_token = credentials['token']
@@ -55,9 +55,9 @@ class Users::OmniauthCallbacksController < ApplicationController
     else
       # The user is not logged in
       # Check if there is a user with that uid, if it exists, login and redirect, otherwise fetch email and redirect
-      if User.where(linkedin_uid: omniauth['uid']).exists?
+      if User.where('linkedin_uid = ?', omniauth['uid']).exists?
         flash[:notice] = I18n.t "devise.omniauth_callbacks.success", :kind => "Linkedin"
-        user = User.where(linkedin_uid: omniauth['uid']).first
+        user = User.where('linkedin_uid = ?', omniauth['uid']).first
         sign_in(user)
       else
         # The user doesn't exists, fetch the email, register and sign in

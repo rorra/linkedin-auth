@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120810014057) do
+ActiveRecord::Schema.define(:version => 20120810081231) do
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -26,6 +26,15 @@ ActiveRecord::Schema.define(:version => 20120810014057) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
+    t.integer  "linkedin_uid"
+    t.string   "linkedin_token"
+    t.string   "linkedin_secret"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "headline"
+    t.string   "industry"
+    t.string   "picture_url"
+    t.string   "public_profile_url"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

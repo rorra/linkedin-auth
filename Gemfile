@@ -6,6 +6,8 @@ gem 'jquery-rails'
 gem 'pg', '0.13.2'
 gem 'devise'
 gem 'linkedin'
+gem 'omniauth'
+gem 'omniauth-linkedin'
 
 
 group :assets do

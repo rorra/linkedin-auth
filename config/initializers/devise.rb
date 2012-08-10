@@ -207,6 +207,9 @@ Devise.setup do |config|
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', :scope => 'user,public_repo'
 
+  # Register the linkedin auth though oauth with devise
+  config.omniauth :linkedin, LINKEDIN_KEY, LINKEDIN_SECRET, {client_options: {fields: ["id", "first-name", "last-name", "headline", "industry", "picture-url", "public-profile-url", "email-address"], request_token_path: '/uas/oauth/requestToken?scope=r_emailaddress'}}
+
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.

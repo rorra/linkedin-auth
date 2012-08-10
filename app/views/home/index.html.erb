@@ -1,7 +1,26 @@
 <h1>This is the home page</h1>
 
 <%- if user_signed_in? %>
-  <%= link_to('Logout', destroy_user_session_path) %>
+  <%= link_to('Access protected page', protected_page_path) %>
+  <br/>
+  <%= link_to('Logout', destroy_user_session_path, method: :delete) %>
+  <br/>
+  <h3>Linkedin Information</h3>
+  <%= image_tag(current_user.picture_url) %>
+  <p>
+    Linkedin ID: <%= current_user.linkedin_uid %>
+    <br/>
+    First Name: <%= current_user.first_name %>
+    <br/>
+    Last Name: <%= current_user.last_name %>
+    <br/>
+    Headline: <%= current_user.headline %>
+    <br/>
+    Industry: <%= current_user.industry %>
+    <br/>
+    Linkedin: <%= link_to(current_user.public_profile_url, current_user.public_profile_url) %>
+    <br/>
+  </p>
 <%- else %>
   <%= link_to("Sign in with LinkedIn", user_omniauth_authorize_path('linkedin')) %>
   <br/>

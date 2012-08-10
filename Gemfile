@@ -5,6 +5,7 @@ gem 'rails', '3.2.7'
 gem 'jquery-rails'
 gem 'pg', '0.13.2'
 gem 'devise'
+gem 'linkedin'
 
 
 group :assets do

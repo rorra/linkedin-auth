@@ -8,4 +8,13 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
+
+  has_many :linkedin_positions
+  has_many :linkedin_companies, through: :linkedin_positions
+
+  def linkedin_client
+    client = LinkedIn::Client.new(LINKEDIN_KEY, LINKEDIN_SECRET)
+    client.authorize_from_access(self.linkedin_token, self.linkedin_secret)
+    client
+  end
 end

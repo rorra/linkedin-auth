@@ -11,7 +11,31 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120810081231) do
+ActiveRecord::Schema.define(:version => 20120811074903) do
+
+  create_table "linkedin_companies", :force => true do |t|
+    t.integer  "linkedin_id"
+    t.string   "name"
+    t.string   "company_type"
+    t.string   "size"
+    t.string   "industry"
+    t.string   "ticker"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  create_table "linkedin_positions", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "linkedin_company_id"
+    t.integer  "linkedin_id"
+    t.boolean  "is_current"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.string   "title"
+    t.string   "summary"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false

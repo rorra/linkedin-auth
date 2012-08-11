@@ -28,7 +28,7 @@ class Users::OmniauthCallbacksController < ApplicationController
         if current_user.linkedin_uid.blank?
           # Just link the account
           client = LinkedIn::Client.new(LINKEDIN_KEY, LINKEDIN_SECRET)
-          client.authorize_from_request(credentials['token'], credentials['secret'])
+          client.authorize_from_access(credentials['token'], credentials['secret'])
 
           data = client.profile(fields: %w(email-address first_name last_name headline industry picture-url public-profile-url))
 

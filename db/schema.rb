@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(:version => 20120810081231) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
-    t.integer  "linkedin_uid"
+    t.string   "linkedin_uid"
     t.string   "linkedin_token"
     t.string   "linkedin_secret"
     t.string   "first_name"

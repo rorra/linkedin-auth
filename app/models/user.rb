@@ -18,6 +18,8 @@ class User < ActiveRecord::Base
   has_many :user_groups
   has_many :linkedin_groups, through: :user_groups
 
+  has_many :linkedin_educations
+
   belongs_to :linkedin_location
 
   def linkedin_client

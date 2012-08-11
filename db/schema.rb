@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120811091810) do
+ActiveRecord::Schema.define(:version => 20120811093213) do
 
   create_table "linkedin_companies", :force => true do |t|
     t.integer  "linkedin_id"
@@ -35,6 +35,20 @@ ActiveRecord::Schema.define(:version => 20120811091810) do
     t.string   "public_profile_url"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
+  end
+
+  create_table "linkedin_educations", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "linkedin_id"
+    t.string   "school_name"
+    t.string   "field_of_study"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.string   "degree"
+    t.string   "activities"
+    t.string   "notes"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
   end
 
   create_table "linkedin_groups", :force => true do |t|

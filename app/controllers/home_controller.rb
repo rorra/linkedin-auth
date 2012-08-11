@@ -88,6 +88,23 @@ class HomeController < ApplicationController
                            membership_state: group_membership['membership_state']['code'])
         end
       end
+
+
+      user_educations = client.profile(:fields => %w(educations))
+      LinkedinEducation.where(user_id: current_user.id).delete_all()
+      if user_educations['educations']['total'].to_i > 0
+        user_educations['educations']['all'].each do |education|
+          LinkedinEducation.create(user: current_user,
+                                   linkedin_id: education['id'].to_i,
+                                   school_name: education['school_name'],
+                                   field_of_study: education['field_of_study'],
+                                   start_date: (Date.strptime("#{education['start_date']['month']}/#{education['start_date']['year']}", '%m/%Y') rescue nil),
+                                   end_date: (Date.strptime("#{education['end_date']['month']}/#{education['end_date']['year']}", '%m/%Y') rescue nil),
+                                   degree: education['degree'],
+                                   activities: education['activities'],
+                                   notes: education['notes'])
+        end
+      end
     end
   end
 end

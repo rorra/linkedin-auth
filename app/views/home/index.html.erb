@@ -95,6 +95,36 @@
       </tbody>
     </table>
 
+    <h3>Education</h3>
+    <table>
+      <thead>
+      <tr>
+        <td>Linkedin ID</td>
+        <td>School Name</td>
+        <td>Field Of Study</td>
+        <td>Start Date</td>
+        <td>End Date</td>
+        <td>Degree</td>
+        <td>Activities</td>
+        <td>Notes</td>
+      </tr>
+      </thead>
+      <tbody>
+      <%- current_user.linkedin_educations.each do |education| %>
+        <tr>
+          <td><%= education.linkedin_id %></td>
+          <td><%= education.school_name %></td>
+          <td><%= education.field_of_study %></td>
+          <td><%= education.start_date %></td>
+          <td><%= education.end_date %></td>
+          <td><%= education.degree %></td>
+          <td><%= education.activities %></td>
+          <td><%= education.notes %></td>
+        </tr>
+      <%- end %>
+      </tbody>
+    </table>
+
   <%- else %>
     <%= link_to('Link my LinkedIn Account', user_omniauth_authorize_path('linkedin')) %>
   <%- end %>

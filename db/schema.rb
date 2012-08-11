@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120811074903) do
+ActiveRecord::Schema.define(:version => 20120811083941) do
 
   create_table "linkedin_companies", :force => true do |t|
     t.integer  "linkedin_id"
@@ -24,6 +24,26 @@ ActiveRecord::Schema.define(:version => 20120811074903) do
     t.datetime "updated_at",   :null => false
   end
 
+  create_table "linkedin_connections", :force => true do |t|
+    t.integer  "location_id"
+    t.string   "linkedin_id"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "headline"
+    t.string   "industry"
+    t.string   "picture_url"
+    t.string   "public_profile_url"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
+  create_table "linkedin_locations", :force => true do |t|
+    t.string   "code"
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "linkedin_positions", :force => true do |t|
     t.integer  "user_id"
     t.integer  "linkedin_company_id"
@@ -32,10 +52,19 @@ ActiveRecord::Schema.define(:version => 20120811074903) do
     t.date     "start_date"
     t.date     "end_date"
     t.string   "title"
-    t.string   "summary"
+    t.text     "summary"
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
   end
+
+  create_table "user_connections", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "linkedin_connection_id"
+    t.datetime "created_at",             :null => false
+    t.datetime "updated_at",             :null => false
+  end
+
+  add_index "user_connections", ["user_id", "linkedin_connection_id"], :name => "index_user_connections_on_user_id_and_linkedin_connection_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -53,6 +82,7 @@ ActiveRecord::Schema.define(:version => 20120811074903) do
     t.string   "linkedin_uid"
     t.string   "linkedin_token"
     t.string   "linkedin_secret"
+    t.integer  "linkedin_location_id"
     t.string   "first_name"
     t.string   "last_name"
     t.string   "headline"

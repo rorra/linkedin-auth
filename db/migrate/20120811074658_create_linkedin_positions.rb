@@ -9,7 +9,7 @@ class CreateLinkedinPositions < ActiveRecord::Migration
       t.date :start_date
       t.date :end_date
       t.string :title
-      t.string :summary
+      t.text :summary
 
       t.timestamps
     end

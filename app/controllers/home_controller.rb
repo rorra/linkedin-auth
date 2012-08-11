@@ -26,10 +26,47 @@ class HomeController < ApplicationController
                                           linkedin_company: company,
                                           is_current: position['is_current'],
                                           start_date: Date.strptime("#{position['start_date']['month']}/#{position['start_date']['year']}", '%m/%Y'),
+                                          end_date: (Date.strptime("#{position['end_date']['month']}/#{position['end_date']['year']}", '%m/%Y') rescue nil),
                                           summary: position['summary'],
                                           title: position['title'])
           position.user_id = current_user.id
           position.save
+        end
+      end
+
+      # User connections
+      connections = client.connections
+      if connections['total'].to_i > 0
+        connections['all'].each do |connection|
+          if LinkedinConnection.where(linkedin_id: connection['id']).exists?
+            linkedin_connection = LinkedinConnection.where(linkedin_id: connection['id']).first
+          else
+            linkedin_connection = LinkedinConnection.new(linkedin_id: connection['id'])
+          end
+          linkedin_location = nil
+          begin
+            if LinkedinLocation.where(code: connection['location']['country']['code']).exists?
+              linkedin_location = LinkedinLocation.where(code: connection['location']['country']['code']).first
+            else
+              linkedin_location = LinkedinLocation.new(code: connection['location']['country']['code'],
+                                                       name: connection['location']['name'])
+              linkedin_location.save
+            end
+          rescue Exception
+          end
+
+          linkedin_connection.linkedin_location = linkedin_location
+
+          linkedin_connection.first_name = connection['first_name']
+          linkedin_connection.last_name = connection['last_name']
+          linkedin_connection.headline = connection['headline']
+          linkedin_connection.industry = connection['industry']
+          linkedin_connection.picture_url = connection['picture_url']
+          linkedin_connection.public_profile_url = connection['site_standard_profile_request']['url'] rescue nil
+
+          linkedin_connection.save
+
+          linkedin_connection.users << current_user unless linkedin_connection.users.include?(current_user)
         end
       end
 

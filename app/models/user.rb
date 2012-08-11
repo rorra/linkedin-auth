@@ -12,6 +12,10 @@ class User < ActiveRecord::Base
   has_many :linkedin_positions
   has_many :linkedin_companies, through: :linkedin_positions
 
+  has_many :user_connections
+  has_many :linkedin_connections, through: :user_connections
+  belongs_to :linkedin_location
+
   def linkedin_client
     client = LinkedIn::Client.new(LINKEDIN_KEY, LINKEDIN_SECRET)
     client.authorize_from_access(self.linkedin_token, self.linkedin_secret)

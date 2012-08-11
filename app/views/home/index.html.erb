@@ -22,6 +22,59 @@
       Linkedin: <%= link_to(current_user.public_profile_url, current_user.public_profile_url) %>
       <br/>
     </p>
+
+    <h3>Positions</h3>
+    <table>
+      <thead>
+      <tr>
+        <td>Linkedin ID</td>
+        <td>Company</td>
+        <td>Is Current?</td>
+        <td>Start Date</td>
+        <td>End Date</td>
+        <td>Title</td>
+        <td>Summary</td>
+      </tr>
+      </thead>
+      <tbody>
+      <%- current_user.linkedin_positions.each do |position| %>
+        <tr>
+          <td><%= position.linkedin_id %></td>
+          <td><%= position.linkedin_company.name %></td>
+          <td><%= position.is_current? %></td>
+          <td><%= position.start_date %></td>
+          <td><%= position.end_date %></td>
+          <td><%= position.title %></td>
+          <td><%= truncate(position.summary, length: 100) %></td>
+        </tr>
+      <%- end %>
+      </tbody>
+    </table>
+
+    <h3>Companies</h3>
+    <table>
+      <thead>
+      <tr>
+        <td>Linkedin ID</td>
+        <td>Name</td>
+        <td>Type</td>
+        <td>Industry</td>
+        <td>Ticker</td>
+      </tr>
+      </thead>
+      <tbody>
+      <%- current_user.linkedin_companies.each do |company| %>
+        <tr>
+          <td><%= company.linkedin_id %></td>
+          <td><%= company.name %></td>
+          <td><%= company.company_type %></td>
+          <td><%= company.industry %></td>
+          <td><%= company.ticker %></td>
+        </tr>
+      <%- end %>
+      </tbody>
+    </table>
+
   <%- else %>
     <%= link_to('Link my LinkedIn Account', user_omniauth_authorize_path('linkedin')) %>
   <%- end %>

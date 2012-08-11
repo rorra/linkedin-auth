@@ -70,7 +70,24 @@ class HomeController < ApplicationController
         end
       end
 
-      # Fetch the user connections
+      # Fetch the user groups
+      group_memberships = client.group_memberships
+      UserGroup.where(user_id: current_user.id).delete_all()
+      if group_memberships['total'].to_i > 0
+        group_memberships['all'].each do |group_membership|
+          if LinkedinGroup.where(linkedin_id: group_membership['group']['id']).exists?
+            linkedin_group = LinkedinGroup.where(linkedin_id: group_membership['group']['id']).first
+          else
+            linkedin_group = LinkedinGroup.create(linkedin_id: group_membership['group']['id'],
+                                               name: group_membership['group']['name'])
+          end
+
+          UserGroup.create(user: current_user,
+                           linkedin_group: linkedin_group,
+                           linkedin_id: group_membership['id'],
+                           membership_state: group_membership['membership_state']['code'])
+        end
+      end
     end
   end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120811083941) do
+ActiveRecord::Schema.define(:version => 20120811091810) do
 
   create_table "linkedin_companies", :force => true do |t|
     t.integer  "linkedin_id"
@@ -35,6 +35,13 @@ ActiveRecord::Schema.define(:version => 20120811083941) do
     t.string   "public_profile_url"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
+  end
+
+  create_table "linkedin_groups", :force => true do |t|
+    t.integer  "linkedin_id"
+    t.string   "name"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "linkedin_locations", :force => true do |t|
@@ -65,6 +72,15 @@ ActiveRecord::Schema.define(:version => 20120811083941) do
   end
 
   add_index "user_connections", ["user_id", "linkedin_connection_id"], :name => "index_user_connections_on_user_id_and_linkedin_connection_id"
+
+  create_table "user_groups", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "linkedin_group_id"
+    t.string   "linkedin_id"
+    t.string   "membership_state"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false

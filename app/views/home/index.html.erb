@@ -75,6 +75,26 @@
       </tbody>
     </table>
 
+    <h3>Groups</h3>
+    <table>
+      <thead>
+      <tr>
+        <td>Linkedin ID</td>
+        <td>Name</td>
+        <td>Membership State</td>
+      </tr>
+      </thead>
+      <tbody>
+      <%- current_user.user_groups.each do |user_group| %>
+        <tr>
+          <td><%= user_group.linkedin_group.linkedin_id %></td>
+          <td><%= user_group.linkedin_group.name %></td>
+          <td><%= user_group.membership_state %></td>
+        </tr>
+      <%- end %>
+      </tbody>
+    </table>
+
   <%- else %>
     <%= link_to('Link my LinkedIn Account', user_omniauth_authorize_path('linkedin')) %>
   <%- end %>
